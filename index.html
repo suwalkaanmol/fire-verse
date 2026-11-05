@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Verse: Cyberpunk Neon Shootout</title>
+    <!-- Sci-fi and Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Main Game HUD (Heads-Up Display) -->
+        <header id="hud" class="hidden">
+            <!-- Player 1 HUD (Left) -->
+            <div class="player-hud" id="hud-p1">
+                <div class="hud-profile">
+                    <span class="hud-class">CYBER RANGER</span>
+                    <span class="hud-label">P1</span>
+                </div>
+                <div class="hp-container">
+                    <div class="hp-bar-outer">
+                        <div class="hp-bar-inner" id="p1-hp-bar" style="width: 100%;"></div>
+                        <div class="hp-bar-glitch" id="p1-hp-glitch" style="width: 100%;"></div>
+                    </div>
+                    <div class="hp-text-wrapper">
+                        <span>HP</span>
+                        <span id="p1-hp-val">200 / 200</span>
+                    </div>
+                </div>
+                <div class="weapon-status">
+                    <span class="gun-name">SCAR-H [MEDIUM RANGE]</span>
+                    <div class="ammo-container">
+                        <span id="p1-ammo-val" class="ammo-number">30</span><span class="ammo-slash">/</span><span class="ammo-max">30</span>
+                        <div class="ammo-clip" id="p1-ammo-clip">
+                            <!-- JS will generate bullet slots -->
+                        </div>
+                    </div>
+                    <div class="reload-indicator-wrapper">
+                        <div class="reload-bar" id="p1-reload-bar" style="width: 0%;"></div>
+                        <span class="reload-text" id="p1-reload-text">RELOADING...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VS Centerpiece -->
+            <div id="hud-vs">
+                <div class="vs-glow">VS</div>
+                <div class="timer" id="match-timer">00:00</div>
+            </div>
+
+            <!-- Player 2 HUD (Right) -->
+            <div class="player-hud" id="hud-p2">
+                <div class="hud-profile text-right">
+                    <span class="hud-class">NEON SPECTRE</span>
+                    <span class="hud-label">P2</span>
+                </div>
+                <div class="hp-container">
+                    <div class="hp-bar-outer">
+                        <div class="hp-bar-inner" id="p2-hp-bar" style="width: 100%;"></div>
+                        <div class="hp-bar-glitch" id="p2-hp-glitch" style="width: 100%;"></div>
+                    </div>
+                    <div class="hp-text-wrapper">
+                        <span>HP</span>
+                        <span id="p2-hp-val">200 / 200</span>
+                    </div>
+                </div>
+                <div class="weapon-status text-right">
+                    <span class="gun-name">SCAR-H [MEDIUM RANGE]</span>
+                    <div class="ammo-container reverse">
+                        <div class="ammo-clip" id="p2-ammo-clip">
+                            <!-- JS will generate bullet slots -->
+                        </div>
+                        <span id="p2-ammo-val" class="ammo-number">30</span><span class="ammo-slash">/</span><span class="ammo-max">30</span>
+                    </div>
+                    <div class="reload-indicator-wrapper">
+                        <div class="reload-bar" id="p2-reload-bar" style="width: 0%;"></div>
+                        <span class="reload-text" id="p2-reload-text">RELOADING...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Screen Area -->
+        <main id="game-viewport">
+            <canvas id="game-canvas" width="1000" height="600"></canvas>
+
+            <!-- Screen 1: Start Menu -->
+            <section id="start-screen" class="overlay">
+                <div class="glass-panel">
+                    <!-- Cyber Decor Corners -->
+                    <div class="cyber-corner top-left"></div>
+                    <div class="cyber-corner top-right"></div>
+                    <div class="cyber-corner bottom-left"></div>
+                    <div class="cyber-corner bottom-right"></div>
+
+                    <!-- Blinking Status Banner -->
+                    <div class="system-status">
+                        <span class="status-dot blinking"></span>
+                        <span class="status-text">COMMUNICATION LINK: ESTABLISHED // PROTOCOL ACTIVE</span>
+                    </div>
+
+                    <div class="neon-title-container">
+                        <h1 class="neon-title" data-text="FIRE VERSE">FIRE VERSE</h1>
+                        <h3 class="neon-subtitle">NEON SHOWDOWN</h3>
+                    </div>
+
+                    <!-- Tactical Combat Specs (Combined Rules and Controls) -->
+                    <div class="specs-grid">
+                        <!-- Player 1 Profile Card -->
+                        <div class="specs-card p1-theme">
+                            <div class="card-header">
+                                <span class="header-tag">PILOT</span>
+                                <h4>PLAYER (CYBER RANGER)</h4>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">CONTROLS</span>
+                                <span class="spec-val">MOUSE CURSOR</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">WEAPON FUSE</span>
+                                <span class="spec-val">RIGHT CLICK (HOLD)</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">RELOAD MAG</span>
+                                <span class="spec-val">KEY [R] // 30 ROUNDS</span>
+                            </div>
+                        </div>
+
+                        <!-- Player 2 / Bot Profile Card -->
+                        <div class="specs-card p2-theme">
+                            <div class="card-header">
+                                <span class="header-tag">TARGET</span>
+                                <h4>OPPONENT (NEON SPECTRE)</h4>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">BEHAVIOR</span>
+                                <span class="spec-val">AUTONOMOUS BOT / PVP</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">SCAR RANGE</span>
+                                <span class="spec-val">550px LIMIT (DISSOLVES)</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">TACTICAL HP</span>
+                                <span class="spec-val">200 MAX CAPACITY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Mode Selection -->
+                    <div class="mode-selection">
+                        <span class="mode-label">GAME MODE:</span>
+                        <div class="mode-options">
+                            <button id="btn-mode-ai" class="btn-mode active">VS SYSTEM BOT (AI)</button>
+                            <button id="btn-mode-pvp" class="btn-mode">VS LOCAL PLAYER</button>
+                        </div>
+                    </div>
+
+                    <!-- Bot Difficulty Selection -->
+                    <div id="diff-selection-container" class="mode-selection">
+                        <span class="mode-label">BOT DIFFICULTY:</span>
+                        <div class="mode-options">
+                            <button id="btn-diff-1" class="btn-mode active">LEVEL 1</button>
+                            <button id="btn-diff-2" class="btn-mode">LEVEL 2</button>
+                            <button id="btn-diff-3" class="btn-mode">LEVEL 3</button>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="btn-start" class="btn-neon green">INITIALIZE DUEL (ENTER)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 2: Game Over Screen -->
+            <section id="gameover-screen" class="overlay hidden">
+                <div class="glass-panel">
+                    <h2 class="neon-title small" id="winner-title">VICTORY</h2>
+                    <h1 class="winner-name" id="winner-name">PLAYER 1 WINS</h1>
+                    
+                    <div class="stats-panel">
+                        <div class="player-stat-col" id="stat-p1">
+                            <h3>CYBER RANGER (P1)</h3>
+                            <p>Shots Fired: <span id="stat-p1-shots">0</span></p>
+                            <p>Accuracy: <span id="stat-p1-acc">0%</span></p>
+                            <p>Damage Dealt: <span id="stat-p1-dmg">0</span></p>
+                        </div>
+                        <div class="stat-vs">STATS</div>
+                        <div class="player-stat-col text-right" id="stat-p2">
+                            <h3>NEON SPECTRE (P2)</h3>
+                            <p>Shots Fired: <span id="stat-p2-shots">0</span></p>
+                            <p>Accuracy: <span id="stat-p2-acc">0%</span></p>
+                            <p>Damage Dealt: <span id="stat-p2-dmg">0</span></p>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="btn-restart" class="btn-neon blue">RE-ENGAGE SYSTEMS</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="footer-controls">
+            <span>Press ESC to return to main menu. Sound effects generated dynamically via Web Audio API.</span>
+        </footer>
+    </div>
+
+    <!-- Main Game Logic -->
+    <script src="game.js"></script>
+</body>
+</html>
