@@ -2,18 +2,18 @@
 
 Fire Verse is a high-fidelity, cyberpunk-themed 2D multiplayer and single-player shootout game built entirely with client-side web technologies. It features dynamic physics, procedurally synthesized sound effects, adaptive bot AI levels, and a sleek neon glassmorphic UI.
 
-👉 **Live Demo**: `https://<your-github-username>.github.io/fire-verse/` *(Once GitHub Pages is enabled)*
+👉 **Live Demo**: [https://suwalkaanmol.github.io/fire-verse/](https://suwalkaanmol.github.io/fire-verse/)
 
 ---
 
 ## 🎮 Game Controls
 
-| Action | Player (Left / ME) | Player 2 (Right / BOT or PVP) |
-| :--- | :--- | :--- |
-| **Movement** | Hover/Glide to **Mouse Cursor** | **System AI** (Bot) or **Arrow Keys** (PvP) |
-| **Shoot SCAR-H** | **Left Click** (Hold for rapid fire) | **Auto-Fire** (Bot) or **Enter** / **L** (PvP) |
-| **Reload** | Key **`R`** (30 rounds magazine) | **Auto-Reload** (Bot) or Key **`P`** / **`/`** (PvP) |
-| **Menu Controls**| Press **`Enter`** to start/restart. Press **`Escape`** to return to menu. |
+| Action | Player (Left / ME) | Player 2 (Right / BOT or PVP) | Mobile / Touch |
+| :--- | :--- | :--- | :--- |
+| **Movement** | Hover / Glide to **Mouse Cursor** | **System AI** (Bot) or **Arrow Keys** (PvP) | **Touch & Drag** to steer player |
+| **Shoot SCAR-H** | **Left Click** (Hold for rapid fire) | **Auto-Fire** (Bot) or **Enter** / **L** (PvP) | **Hold Touch** on screen to auto-fire |
+| **Reload** | Key **`R`** (30 rounds magazine) | **Auto-Reload** (Bot) or Key **`P`** / **`/`** (PvP) | Automatic on empty clip |
+| **Menu Controls**| Press **`Enter`** to start/restart. Press **`Escape`** to return to menu. | Tap buttons on screen |
 
 ---
 
